@@ -1,35 +1,22 @@
-faturamento = [
-    {'dia': 1, 'faturamento': 500.00},  # Segunda
-    {'dia': 2, 'faturamento': 570.00},  # Terça
-    {'dia': 3, 'faturamento': 590.00},  # Quarta
-    {'dia': 4, 'faturamento': 239.00},  # Quinta
-    {'dia': 5, 'faturamento': 1005.00}, # Sexta
-    {'dia': 6, 'faturamento': 0.00},    # Sábado
-    {'dia': 7, 'faturamento': 0.00},    # Domingo
-    {'dia': 8, 'faturamento': 120.00},  # Segunda
-    {'dia': 9, 'faturamento': 110.00},  # Terça
-    {'dia': 10, 'faturamento': 90.00},  # Quarta
-    {'dia': 11, 'faturamento': 140.00}, # Quinta
-    {'dia': 12, 'faturamento': 800.00}, # Sexta
-    {'dia': 13, 'faturamento': 0.00},   # Sábado
-    {'dia': 14, 'faturamento': 0.00},   # Domingo
-    {'dia': 15, 'faturamento': 180.00}, # Segunda
-    {'dia': 16, 'faturamento': 250.00}, # Terça
-    {'dia': 17, 'faturamento': 310.00}, # Quarta
-    {'dia': 18, 'faturamento': 270.00}, # Quinta
-    {'dia': 19, 'faturamento': 400.00}, # Sexta
-    {'dia': 20, 'faturamento': 0.00},   # Sábado
-    {'dia': 21, 'faturamento': 0.00},   # Domingo
-    {'dia': 22, 'faturamento': 500.00}, # Segunda
-    {'dia': 23, 'faturamento': 600.00}, # Terça
-    {'dia': 24, 'faturamento': 300.00}, # Quarta
-    {'dia': 25, 'faturamento': 400.00}, # Quinta
-    {'dia': 26, 'faturamento': 700.00}, # Sexta
-    {'dia': 27, 'faturamento': 0.00},   # Sábado
-    {'dia': 28, 'faturamento': 0.00},   # Domingo
-    {'dia': 29, 'faturamento': 800.00}, # Segunda
-    {'dia': 30, 'faturamento': 900.00}, # Terça
-]
+import xml.etree.ElementTree as ET
+
+def ler_faturamento_xml(arquivo_faturamento):
+    tree = ET.parse(arquivo_faturamento)
+    root = tree.getroot()
+    
+    faturamento = []
+    for row in root.findall('row'):
+        dia = int(row.find('dia').text)
+        valor = float(row.find('valor').text)
+        faturamento.append({'dia': dia, 'faturamento': valor})
+    
+    return faturamento
+
+
+arquivo_faturamento = 'faturamento.xml' 
+
+
+faturamento = ler_faturamento_xml(arquivo_faturamento)
 
 
 menor_faturamento = float('inf')
